@@ -1,4 +1,4 @@
-# DirectCurrencyConverter
+# Simpel Currency Converter
 Currency Converter App for Android highlighting recommended Architectural patterns.
 
 
