@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Simple Currency Converter</string>
+    <string name="app_name_title">SIMPLE CURRENCY CONVERTER</string>
+    <string name="currency">Currency</string>
+    <string name="refresh">refresh</string>
+    <string name="convert">Convert</string>
+    <string name="converter">Converter</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="amount">Amount</string>
+    <string name="result">Result</string>
+    <string name="converted_amount">Converted Amount</string>
+    <string name="vnd">VND</string>
+    <string name="usd">USD</string>
+    <string name="indicative_exchange_rates">Indicative Exchange Rates</string>
+    <string name="exchange_rate_example">1 USD = 23,000 VND</string>
+    <string name="zero_vnd">0.00 VND</string>
+    <string name="exchange">Exchange</string>
+    <string name="united_states">United States</string>
+    <string name="viet_nam">Viet Nam</string>
+</resources>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    tools:context=".view.MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="@string/app_name"
+            android:textColor="@color/main_blue"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/btnExchange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/circle_btn"
+            android:padding="8dp"
+            android:text="@string/exchange"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.802"
+            app:layout_constraintStart_toEndOf="@+id/viewExchangeRates"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+        <LinearLayout
+            android:id="@+id/viewExchangeRates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:textAlignment="textStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:text="@string/indicative_exchange_rates"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvConvertRates"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/exchange_rate_example"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_shape"
+            android:backgroundTint="@color/light_grey"
+            android:paddingVertical="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="8dp"
+                android:layout_marginBottom="32dp"
+                android:divider="@drawable/horizontal_divider"
+                android:orientation="vertical"
+                android:showDividers="middle"
+                app:layout_constraintBottom_toTopOf="@+id/divider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="4dp"
+                    android:layout_marginStart="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/from" />
+
+                    <TextView
+                        android:id="@+id/txtFrom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:text="@string/usd"
+                        android:textColor="@color/main_blue"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        tools:ignore="RtlSymmetry" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:divider="@drawable/horizontal_divider"
+                    android:dividerPadding="10dp"
+                    android:orientation="horizontal"
+                    android:showDividers="middle">
+
+                    <com.jaredrummler.materialspinner.MaterialSpinner
+                        android:id="@+id/spnFirstCountry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:hint="@string/united_states"
+                        android:maxWidth="160dp"
+                        android:maxHeight="70dp"
+                        android:minHeight="50dp"
+                        android:textColor="@android:color/darker_gray" />
+
+                    <EditText
+                        android:id="@+id/etFirstCurrency"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:ellipsize="start"
+                        android:hint="@string/amount"
+                        android:importantForAutofill="no"
+                        android:inputType="numberDecimal"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        tools:ignore="LabelFor" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="32dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="4dp"
+                    android:layout_marginStart="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/to" />
+
+                    <TextView
+                        android:id="@+id/txtTo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:text="@string/vnd"
+                        android:textColor="@color/main_blue"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        tools:ignore="RtlSymmetry" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:divider="@drawable/horizontal_divider"
+                    android:dividerPadding="16dp"
+                    android:orientation="horizontal"
+                    android:showDividers="middle">
+
+                    <com.jaredrummler.materialspinner.MaterialSpinner
+                        android:id="@+id/spnSecondCountry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:hint="@string/viet_nam"
+                        android:maxWidth="160dp"
+                        android:maxHeight="70dp"
+                        android:minHeight="50dp"
+                        android:textColor="@android:color/darker_gray" />
+
+                    <TextView
+                        android:id="@+id/tvSecondCurrency"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:text="@string/zero_vnd"
+                        android:textAlignment="viewEnd"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        tools:ignore="LabelFor,RtlCompat" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnSwapExchange"
+                android:layout_width="72dp"
+                android:layout_height="48dp"
+                android:background="@drawable/circle_btn"
+                android:drawableStart="@drawable/ic_swap_exchange"
+                android:drawablePadding="5dp"
+                android:elevation="2dp"
+                android:paddingHorizontal="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/divider"
+                app:layout_constraintStart_toStartOf="@+id/divider"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ProgressBar
+            android:id="@+id/prgLoading"
+            android:layout_width="48dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="4dp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAppName" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
