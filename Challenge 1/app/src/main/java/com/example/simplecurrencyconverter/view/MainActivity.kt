@@ -3,9 +3,9 @@ package com.example.simplecurrencyconverter.view
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -14,6 +14,7 @@ import com.example.simplecurrencyconverter.R
 import com.example.simplecurrencyconverter.databinding.ActivityMainBinding
 import com.example.simplecurrencyconverter.helper.Resource
 import com.example.simplecurrencyconverter.helper.Utils
+import com.example.simplecurrencyconverter.helper.toFlagEmoji
 import com.example.simplecurrencyconverter.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.jaredrummler.materialspinner.MaterialSpinner
@@ -48,6 +49,8 @@ class MainActivity : AppCompatActivity() {
         togglePrgLoading(true)
         mainViewModel.fetchLatestRates()
         binding.etFirstCurrency.setText("1")
+        binding.txtFrom.text = "${"US".toFlagEmoji()} - USD"
+        binding.txtTo.text = "${"VN".toFlagEmoji()} - VND"
 
         mainViewModel.data.observe(this, Observer { result ->
             when (result.status) {
@@ -71,12 +74,25 @@ class MainActivity : AppCompatActivity() {
 
     private fun initSpinner() {
         val countries = getAllCountries()
-        setupSpinner(binding.spnFirstCountry, countries, "United States") { selectedItem1 = it }
-        setupSpinner(binding.spnSecondCountry, countries, "Vietnam") { selectedItem2 = it }
+        setupSpinner(
+            binding.spnFirstCountry,
+            binding.txtFrom,
+            countries,
+            "United States"
+        ) { selectedItem1 = it }
+
+        setupSpinner(
+            binding.spnSecondCountry,
+            binding.txtTo,
+            countries,
+            "Vietnam"
+        ) { selectedItem2 = it }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupSpinner(
         spinner: MaterialSpinner,
+        currency: TextView,
         items: List<String>,
         defaultItem: String,
         onItemSelected: (String) -> Unit
@@ -84,7 +100,10 @@ class MainActivity : AppCompatActivity() {
         spinner.setItems(items)
         spinner.setOnClickListener { Utils.hideKeyboard(this) }
         spinner.setOnItemSelectedListener { _, _, _, item ->
-            onItemSelected(getSymbol(getCountryCode(item.toString()) ?: "") ?: "")
+            val countryCode = getCountryCode(item.toString()) ?: ""
+            val selectedCountry = getSymbol(countryCode) ?: ""
+            onItemSelected(selectedCountry)
+            currency.text = "${countryCode.toFlagEmoji()} - $selectedCountry"
             doConversion()
         }
         spinner.text = defaultItem
@@ -149,12 +168,22 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n", "DefaultLocale")
     private fun doConversion() {
         Utils.hideKeyboard(this)
+
+
         val amount = binding.etFirstCurrency.text.toString().toDouble()
         val rate = exchangeRate(selectedItem1, selectedItem2)
         val convertedAmount = rate * amount
-        binding.tvSecondCurrency.text = String.format("%,.2f %s", convertedAmount, selectedItem2)
+        binding.tvSecondCurrency.text = "${formatCurrency(convertedAmount)} $selectedItem2"
         binding.tvConvertRates.text =
-            "1 $selectedItem1 = ${String.format("%,.2f", rate)} $selectedItem2"
+            "1 $selectedItem1 = ${formatCurrency(rate)} $selectedItem2"
+    }
+
+    @SuppressLint("DefaultLocale")
+    private fun formatCurrency(amount: Double): String {
+        if (amount < 1000) {
+            return String.format("%,.2f", amount)
+        }
+        return String.format("%,.0f", amount)
     }
 
     private fun togglePrgLoading(show: Boolean) {

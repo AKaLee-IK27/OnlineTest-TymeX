@@ -2,7 +2,6 @@
 
 package com.example.simplecurrencyconverter.viewmodel
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.simplecurrencyconverter.helper.Resource
@@ -16,10 +15,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val mainRepo: MainRepo) : ViewModel() {
 
     private val _data = SingleLiveEvent<Resource<ApiResponse>>()
-
-
     val data = _data
-    val convertedRate = MutableLiveData<Double>()
 
     fun fetchLatestRates() {
         viewModelScope.launch {
@@ -27,13 +23,5 @@ class MainViewModel @Inject constructor(private val mainRepo: MainRepo) : ViewMo
                 data.value = it
             }
         }
-    }
-
-    fun convertToUSD(from: String, amount: Double) {
-       convertedRate
-    }
-
-    fun convertCurrency(from: String, to: String, amount: Double) {
-
     }
 }
