@@ -2,7 +2,7 @@
 Currency Converter App for Android highlighting recommended Architectural patterns.
 
 
-<img src="https://i.ibb.co/V2fxZGB/Screenshot-2024-12-17-01-52-46-645-com-example-simplecurrencyconverter-1.jpg" > 
+<img src="https://github.com/AKaLee-IK27/OnlineTest-TymeX/blob/main/Media/ScreenShot.jpg?raw=true" > 
 
 ## This App Uses
 
@@ -21,3 +21,9 @@ Coroutines (For simplifying Asynchronous operations)
 View Binding (For interacting with views)
 
 Flow, LiveData, Some other libraries...
+
+
+## Demo
+
+https://github.com/user-attachments/assets/ea4a4cb0-d712-452f-9996-341774739cf2
+
