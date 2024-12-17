@@ -140,15 +140,6 @@ class MainActivity : AppCompatActivity() {
                 true
             } else false
         }
-
-        binding.etFirstCurrency.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                Utils.hideKeyboard(this)
-                true
-            } else {
-                false
-            }
-        }
     }
 
     private fun exchangeRate(from: String, to: String): Double {
