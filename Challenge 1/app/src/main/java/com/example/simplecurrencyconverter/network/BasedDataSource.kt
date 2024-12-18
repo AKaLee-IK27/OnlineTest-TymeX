@@ -5,10 +5,6 @@ import com.example.simplecurrencyconverter.helper.Resource
 import retrofit2.Response
 import java.lang.Exception
 
-/**
- * This helps to properly handle the response gotten from the API - Be it error, success etc
- */
-
 abstract class BaseDataSource {
 
     suspend fun <T> safeApiCall(apiCall: suspend () -> Response<T>): Resource<T> {
@@ -21,9 +17,9 @@ abstract class BaseDataSource {
                     return Resource.success(body)
                 }
             }
-            return this.error(message = "${response.code()} ${response.message()}")
+            return error("${response.code()} ${response.message()}")
         } catch (e: Exception) {
-            return this.error(e.message ?: e.toString())
+            return error(e.message ?: e.toString())
         }
     }
 

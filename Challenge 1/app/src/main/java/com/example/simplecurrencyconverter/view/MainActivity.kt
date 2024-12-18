@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         Utils.makeStatusBarTransparent(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        showLoading()
         initSpinner()
         setUpClickListener()
         initRates()
@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("DefaultLocale", "SetTextI18n")
     private fun initRates() {
-        togglePrgLoading(true)
         mainViewModel.fetchLatestRates()
         binding.etFirstCurrency.setText("1")
         binding.txtFrom.text = "${"US".toFlagEmoji()} - USD"
@@ -59,15 +58,19 @@ class MainActivity : AppCompatActivity() {
                         exchangeRatesFromUSD = it
                         doConversion()
                     } ?: showErrorSnackbar()
-                    togglePrgLoading(false)
+                    showMainLayout()
                 }
 
                 Resource.Status.ERROR -> {
-                    showErrorSnackbar()
-                    togglePrgLoading(false)
+                    if (!Utils.isNetworkAvailable(this)) {
+                        showSnackbar("You are not connected to the internet")
+                    } else {
+                        showErrorSnackbar()
+                    }
+                    showButtonReconnect()
                 }
 
-                Resource.Status.LOADING -> togglePrgLoading(true)
+                Resource.Status.LOADING -> showLoading()
             }
         })
     }
@@ -140,6 +143,9 @@ class MainActivity : AppCompatActivity() {
             binding.spnFirstCountry.text = binding.spnSecondCountry.text.also {
                 binding.spnSecondCountry.text = binding.spnFirstCountry.text
             }
+            binding.txtFrom.text = binding.txtTo.text.also {
+                binding.txtTo.text = binding.txtFrom.text
+            }
             doConversion()
         }
 
@@ -159,6 +165,11 @@ class MainActivity : AppCompatActivity() {
                 true
             } else false
         }
+
+        binding.btnReconnect.setOnClickListener {
+            showLoading()
+            initRates()
+        }
     }
 
     private fun exchangeRate(from: String, to: String): Double {
@@ -168,7 +179,6 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n", "DefaultLocale")
     private fun doConversion() {
         Utils.hideKeyboard(this)
-
 
         val amount = binding.etFirstCurrency.text.toString().toDouble()
         val rate = exchangeRate(selectedItem1, selectedItem2)
@@ -186,10 +196,22 @@ class MainActivity : AppCompatActivity() {
         return String.format("%,.0f", amount)
     }
 
-    private fun togglePrgLoading(show: Boolean) {
-        binding.prgLoading.visibility = if (show) View.VISIBLE else View.GONE
-        binding.btnExchange.visibility = if (show) View.GONE else View.VISIBLE
-        binding.btnSwapExchange.visibility = if (show) View.GONE else View.VISIBLE
+    private fun showLoading() {
+        binding.prgLoading.visibility = View.VISIBLE
+        binding.mainLayout.visibility = View.GONE
+        binding.btnReconnect.visibility = View.GONE
+    }
+
+    private fun showButtonReconnect() {
+        binding.prgLoading.visibility = View.GONE
+        binding.mainLayout.visibility = View.GONE
+        binding.btnReconnect.visibility = View.VISIBLE
+    }
+
+    private fun showMainLayout() {
+        binding.prgLoading.visibility = View.GONE
+        binding.mainLayout.visibility = View.VISIBLE
+        binding.btnReconnect.visibility = View.GONE
     }
 
     private fun showSnackbar(message: String) {

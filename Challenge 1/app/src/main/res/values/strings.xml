@@ -18,4 +18,5 @@
     <string name="exchange">Exchange</string>
     <string name="united_states">United States</string>
     <string name="viet_nam">Viet Nam</string>
+    <string name="reconnect">RECONNECT</string>
 </resources>
